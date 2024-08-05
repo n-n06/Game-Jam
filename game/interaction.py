@@ -1,7 +1,10 @@
-from pygame_textinput import TextInputManager, TextInputVisualizer
-from soundbar import sfx
 import pygame
 import json
+from pygame_textinput import TextInputManager, TextInputVisualizer
+
+from soundbar import sfx
+from config import screen
+
 pygame.init()
 
 with open("text/dialogs.json", "r") as json_data:
@@ -13,7 +16,9 @@ class Interactable(pygame.sprite.Sprite):
     Class for object interaction
     '''
     all_object_rects = []
-    def __init__(self, text_speed, rect, room, item):
+    def __init__(self, text_speed : int, rect : tuple[int], room, item):
+        self.screen = screen
+
         self.text_speed = text_speed
         self.text_clock = 0
         self.text_index = 0
@@ -31,7 +36,7 @@ class Interactable(pygame.sprite.Sprite):
 
         Interactable.all_object_rects.append(self.rect)
 
-    def interaction(self, player, screen, pressed):
+    def interaction(self, player, pressed):
         '''
         Identifying if player interacted with an object and calls a rpint_out function to display correpsonding text
         '''
@@ -46,20 +51,20 @@ class Interactable(pygame.sprite.Sprite):
                     self.text_index += 1
                     self.done = False
                     self.text_clock = 0
-                self.print_out(screen)
+                self.print_out()
 
         else:
             self.text_clock = 0
             self.enable = False
 
 
-    def print_out(self, screen):
+    def print_out(self):
         '''
         Function that prints out text in a type writer style
         '''
         self.message = self.text[self.text_index]
-        pygame.draw.rect(screen, (0,0,0), [0, 500, screen.get_width(), screen.get_height() - 500])
-        pygame.draw.rect(screen, (255,255,255), [0,500, screen.get_width(), screen.get_height()-500], 5)
+        pygame.draw.rect(self.screen, (0,0,0), [0, 500, self.screen.get_width(), self.screen.get_height() - 500])
+        pygame.draw.rect(self.screen, (255,255,255), [0,500, self.screen.get_width(), self.screen.get_height()-500], 5)
 
         if self.text_clock < self.text_speed * len(self.message):
             self.text_clock += 1
@@ -68,11 +73,11 @@ class Interactable(pygame.sprite.Sprite):
 
         self.snip = self.font.render(self.message[0:self.text_clock // self.text_speed], True, (255,255,255))
 
-        screen.blit(self.snip, (10, 510))
+        self.screen.blit(self.snip, (10, 510))
 
 
-    def blit(self, screen):
-        pygame.draw.rect(screen, self.rect_color, self.rect)
+    def blit(self):
+        pygame.draw.rect(self.screen, self.rect_color, self.rect)
 
 
 
@@ -85,8 +90,8 @@ class Note(Interactable):
         self.image = pygame.image.load("images/items/paper.png")
         self.rect = self.image.get_rect(topleft = self.rect.topleft)
 
-    def blit(self, screen):
-        screen.blit(self.image, self.rect)
+    def blit(self):
+        self.screen.blit(self.image, self.rect)
 
 #spoiler alert! this part spoils the entire plot. keep that in mind        
 
@@ -102,7 +107,7 @@ class Friend(Interactable):
 
     
 
-    def print_out(self, screen):
+    def print_out(self):
         '''
         Function that prints out text in a type writer style
         '''
@@ -114,13 +119,13 @@ class Friend(Interactable):
                 self.image = self.images[1]
             if self.text_index == 23:
                 self.image = self.images[3]
-            screen.blit(self.image, self.rect)
+            self.screen.blit(self.image, self.rect)
 
-            pygame.draw.rect(screen, (0,0,0), (1100, 460, 180, 40))
-            pygame.draw.rect(screen, (255,255,255), (1100, 460, 180, 40), 3)
+            pygame.draw.rect(self.screen, (0,0,0), (1100, 460, 180, 40))
+            pygame.draw.rect(self.screen, (255,255,255), (1100, 460, 180, 40), 3)
             screen.blit(self.font.render("Asem", True, (255,255,255)), (1110, 470))
-        pygame.draw.rect(screen, (0,0,0), [0, 500, 1280, 720 - 500])
-        pygame.draw.rect(screen, (255,255,255), [0,500, 1280, 720-500], 5)
+        pygame.draw.rect(self.screen, (0,0,0), [0, 500, 1280, 720 - 500])
+        pygame.draw.rect(self.screen, (255,255,255), [0,500, 1280, 720-500], 5)
 
         if self.text_clock < self.text_speed * len(self.message):
             self.text_clock += 1
@@ -129,7 +134,7 @@ class Friend(Interactable):
 
         self.snip = self.font.render(self.message[0:self.text_clock // self.text_speed], True, (255,255,255))
 
-        screen.blit(self.snip, (10, 510))
+        self.screen.blit(self.snip, (10, 510))
 
 
 class Passcode():
