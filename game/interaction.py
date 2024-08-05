@@ -4,6 +4,7 @@ from pygame_textinput import TextInputManager, TextInputVisualizer
 
 from soundbar import sfx
 from config import screen
+from utils import scene_literal
 
 pygame.init()
 
@@ -16,13 +17,13 @@ class Interactable(pygame.sprite.Sprite):
     Class for object interaction
     '''
     all_object_rects = []
-    def __init__(self, text_speed : int, rect : tuple[int], room, item):
+    def __init__(self, text_speed : int, rect : tuple[int, int, int, int], scene : scene_literal, item : str):
         self.screen = screen
 
         self.text_speed = text_speed
         self.text_clock = 0
         self.text_index = 0
-        self.text = dialog_data[room][item]
+        self.text = dialog_data[scene][item]
         self.message = self.text[self.text_index]
 
         self.rect = pygame.Rect(rect)
@@ -85,8 +86,8 @@ class Note(Interactable):
     '''
     Child class of Interactable. Used to display paper notes
     '''
-    def __init__(self, text_speed, rect, room, item):
-        super().__init__(text_speed, rect, room, item)
+    def __init__(self, text_speed : int, rect : tuple[int, int, int, int], scene : scene_literal, item : str):
+        super().__init__(text_speed, rect, scene, item)
         self.image = pygame.image.load("images/items/paper.png")
         self.rect = self.image.get_rect(topleft = self.rect.topleft)
 
@@ -138,12 +139,12 @@ class Friend(Interactable):
 
 
 class Passcode():
-    def __init__(self, screen, rect):
+    def __init__(self, rect):
         self.screen = screen
         self.rect = pygame.Rect(rect)
         self.active_rect = pygame.Rect(self.rect.left - 20, self.rect.top, self.rect.width + 20, self.rect.height + 20)
         self.enable = True
-        self.secret = dialog_data["room5"]["password"]
+        self.secret = dialog_data["scene5"]["password"]
 
         self.font = pygame.font.SysFont("superlegendboy", 28)
 

@@ -116,3 +116,5 @@ class Scene_manager():
         if prev_scene:
             self.prev_scene = prev_scene
         self.current_scene = scene
+
+

@@ -4,9 +4,12 @@ import os
 from soundbar import sfx
 pygame.init()
 
+from config import screen
+from utils import scene_literal
+
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, screen, pos):
+    def __init__(self, pos):
 
         super().__init__()
         self.screen = screen
@@ -124,7 +127,7 @@ class Player(pygame.sprite.Sprite):
 
 
 class Witch(pygame.sprite.Sprite):
-    def __init__(self, screen):
+    def __init__(self):
         super().__init__()
         self.screen = screen
         self.scare_trigger = False
@@ -171,7 +174,7 @@ class Witch(pygame.sprite.Sprite):
 
 
 class Door():
-    def __init__(self, screen, pos):
+    def __init__(self, pos):
         self.screen = screen
 
         self.closed_image = pygame.image.load("images/door/door (1).png")
@@ -205,15 +208,15 @@ class Wall(pygame.sprite.Sprite):
     #walls = pygame.sprite.Group()
 
     walls = {
-        "room1" : [],
-        "room2" : [],
-        "room3" : [],
-        "room4" : [],
-        "room5" : [],
-        "room6" : [],
-        "room7" : [],
+        "scene1" : [],
+        "scene2" : [],
+        "scene3" : [],
+        "scene4" : [],
+        "scene5" : [],
+        "scene6" : [],
+        "scene7" : [],
     }
-    def __init__(self, topleft, size, room):
+    def __init__(self, topleft : tuple[int, int], size : tuple[int, int], scene : scene_literal):
         super().__init__()
         self.x = topleft[0]
         self.y = topleft[1]
@@ -221,14 +224,14 @@ class Wall(pygame.sprite.Sprite):
         self.height = size[1]
         self.show = True
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        Wall.walls[room].append(self)
+        Wall.walls[scene].append(self)
 
-    def show_test(self, screen, room):
+    def show_test(self, room):
         pass
         #for wall in Wall.walls[room]:
             #pygame.draw.rect(screen, (255,255,255), wall.rect, 4)
 
     @classmethod
-    def delete_all(cls, room):
-        cls.walls[room] = []
+    def delete_all(cls, scene : scene_literal):
+        cls.walls[scene] = []
 

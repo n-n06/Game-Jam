@@ -14,7 +14,7 @@ class Intro():
         self.screen = screen
         self.scene_manager = scene_manager
         self.channel = pygame.mixer.Channel(1)
-        self.player = Player(self.screen, (400,600))
+        self.player = Player((400,600))
         self.intro_monologue = Interactable(1, (0,0,1280,720), "intro", "intro monologue")
 
 
@@ -43,15 +43,15 @@ class Scene1():
         self.scene_manager = scene_manager
 
         self.bg = pygame.transform.scale(pygame.image.load('images/room/room1.png'), (1280, 720))
-        self.player = Player(self.screen, (50,600))
+        self.player = Player((50,600))
 
-        self.wall1 = Wall((0,0), (1280,200), "room1")
-        self.table_border = Wall((240,280),(250,80), "room1")
-        self.door = Door(self.screen, (600,60))
+        self.wall1 = Wall((0,0), (1280,200), "scene1")
+        self.table_border = Wall((240,280),(250,80), "scene1")
+        self.door = Door((600,60))
 
 
-        self.notebook = Interactable(1, (195, 280, 250, 120), room="room1", item="notebook")
-        self.puddle = Interactable(1, (1050, 280, 200, 200), room="room1", item="puddle")
+        self.notebook = Interactable(1, (195, 280, 250, 120), scene="scene1", item="notebook")
+        self.puddle = Interactable(1, (1050, 280, 200, 200), scene="scene1", item="puddle")
 
         self.lantern = Light(self.screen, (220,220,220), 25, (self.player.rect.x + 97, self.player.rect.y + 152))
         self.dim = Dim(self.screen)
@@ -76,7 +76,7 @@ class Scene1():
                     self.scene_manager.set_scene("menu", "scene1")
 
         if self.player.rect.colliderect(self.door) and self.door.opened:
-            Wall.delete_all("room1")
+            Wall.delete_all("scene1")
             self.dim.darken(0)
             self.scene_manager.set_scene("scene2")
 
@@ -93,8 +93,7 @@ class Scene1():
         self.notebook.interaction(self.player, keys)
         self.puddle.interaction(self.player, keys)
 
-        self.player.wall_collision(Wall.walls["room1"])
-        self.wall1.show_test(self.screen, "room1")
+        self.player.wall_collision(Wall.walls["scene1"])
 
 
 
@@ -104,13 +103,13 @@ class Scene2():
         self.scene_manager = scene_manager
 
         self.bg = pygame.transform.scale(pygame.image.load('images/room/room2.png'), (1280, 720))
-        self.player = Player(self.screen, (100,600))
-        self.paper = Note(1, (400, 500, 64, 64), room="room2", item="papernote1")
+        self.player = Player((100,600))
+        self.paper = Note(1, (400, 500, 64, 64), scene = "scene2", item="papernote1")
         self.lantern = Light(self.screen, (220,220,220), 25, (self.player.rect.x + 97, self.player.rect.y + 152))
         self.dim = Dim(self.screen)
 
-        self.wall1 = Wall((0,0), (1280,200), "room2")
-        self.border = Interactable(1, (0,0,5,720), "allrooms", "border")
+        self.wall1 = Wall((0,0), (1280,200), "scene2")
+        self.border = Interactable(1, (0,0,5,720), "allscenes", "border")
         #self.bgm_channel = pygame.mixer.Channel(0)
         #self.sfx_channel = pygame.mixer.Channel(1)
 
@@ -132,7 +131,7 @@ class Scene2():
 
         if self.player.rect.x >= self.screen.get_width() - self.player.rect.width - 10:
             self.dim.darken(0)
-            Wall.delete_all("room2")
+            Wall.delete_all("scene2")
             self.scene_manager.set_scene("scene3")
 
         self.paper.blit()
@@ -142,7 +141,7 @@ class Scene2():
         self.lantern.blit((100,100,100), size=5)
         self.paper.interaction(self.player, keys)
         self.border.interaction(self.player, keys)
-        self.player.wall_collision(Wall.walls["room2"])
+        self.player.wall_collision(Wall.walls["scene2"])
 
 
 
@@ -153,21 +152,21 @@ class Scene3():
         self.scene_manager = scene_manager
 
         self.bg = pygame.transform.scale(pygame.image.load('images/room/room3.png'), (1280, 720))
-        self.paper = Note(2, (200, 400, 64, 64), room="room3", item="papernote2")
-        self.player = Player(self.screen, (50,600))
-        self.witch = Witch(self.screen)
+        self.paper = Note(2, (200, 400, 64, 64), scene="scene3", item="papernote2")
+        self.player = Player((50,600))
+        self.witch = Witch()
 
         self.lantern = Light(self.screen, (220,220,220), 25, (self.player.rect.x + 97, self.player.rect.y + 152))
         self.dim = Dim(self.screen)
 
-        self.wall1 = Wall((0,0), (1280,200), "room3")
-        self.wall2 = Wall((20,200), (100,200), "room3")
-        self.wall3 = Wall((750,200), (100,200), "room3")
-        self.wall4 = Wall((1030,200), (80,200), "room3")
+        self.wall1 = Wall((0,0), (1280,200), "scene3")
+        self.wall2 = Wall((20,200), (100,200), "scene3")
+        self.wall3 = Wall((750,200), (100,200), "scene3")
+        self.wall4 = Wall((1030,200), (80,200), "scene3")
 
-        self.border1 = Interactable(1, (0,0,5,720), "allrooms", "border")
-        self.border2 = Interactable(1, (1270,0,5,720), "allrooms", "locked")
-        self.painting = Interactable(1, (500, 200, 100,200), "room3", "painting")
+        self.border1 = Interactable(1, (0,0,5,720), "allscenes", "border")
+        self.border2 = Interactable(1, (1270,0,5,720), "allscenes", "locked")
+        self.painting = Interactable(1, (500, 200, 100,200), "scene3", "painting")
         self.skull = pygame.image.load("images/items/skull.png")
         self.skull_rect = self.skull.get_rect(center = (1050,400))
         self.skull_activate_rect = pygame.Rect((980, 400, 100, 100))
@@ -203,7 +202,7 @@ class Scene3():
         if not self.locked:
             if self.player.rect.x >= self.screen.get_width() - self.player.rect.width - 10:
                 self.dim.darken(0)
-                Wall.delete_all("room3")
+                Wall.delete_all("scene3")
                 self.scene_manager.set_scene("scene4")
 
 
@@ -223,7 +222,7 @@ class Scene3():
         self.painting.interaction(self.player, keys)
 
 
-        self.player.wall_collision(Wall.walls["room3"])
+        self.player.wall_collision(Wall.walls["scene3"])
 
         if self.witch.scare_trigger:
             self.witch.scare(self.player)
@@ -235,28 +234,28 @@ class Scene4():
         self.scene_manager = scene_manager
 
         self.bg = pygame.transform.scale(pygame.image.load('images/room/room4.png'), (1280, 720))
-        self.paper = Note(1, (800, 600, 64, 64), room="room4", item="papernote3")
+        self.paper = Note(1, (800, 600, 64, 64), scene="scene4", item="papernote3")
         self.locker = pygame.image.load("images/items/locker1.png")
         self.locker_rect = self.locker.get_rect(topleft = (500,300))
         self.locker_closed = pygame.image.load("images/items/locker.png")
 
-        self.player = Player(self.screen, (50,600))
+        self.player = Player((50,600))
         self.hidden = False
 
-        self.witch = Witch(self.screen)
+        self.witch = Witch()
         self.timer = 0
 
         self.lantern = Light(self.screen, (220,220,220), 25, (self.player.rect.x + 97, self.player.rect.y + 152))
         self.dim = Dim(self.screen)
 
-        self.wall1 = Wall((0,0), (1280,200), "room4")
-        self.wall2 = Wall((20,200), (400,200), "room4")
-        self.wall3 = Wall((750,200), (180,200), "room4")
-        self.wall4 = Wall((1100,200), (100,200), "room4")
-        self.wall5 = Wall((500,300), (130, 80), "room4")
+        self.wall1 = Wall((0,0), (1280,200), scene="scene4")
+        self.wall2 = Wall((20,200), (400,200), scene="scene4")
+        self.wall3 = Wall((750,200), (180,200), scene="scene4")
+        self.wall4 = Wall((1100,200), (100,200), scene="scene4")
+        self.wall5 = Wall((500,300), (130, 80), scene="scene4")
 
-        self.border1 = Interactable(1, (0,0,5,720), "allrooms", "border")
-        self.border2 = Interactable(1, (1270,0,5,720), "allrooms", "locked")
+        self.border1 = Interactable(1, (0,0,5,720), "allscenes", "border")
+        self.border2 = Interactable(1, (1270,0,5,720), "allscenes", "locked")
         self.locked = True
 
         self.bgm_channel = pygame.mixer.Channel(0)
@@ -288,7 +287,7 @@ class Scene4():
         if not self.locked:
             if self.player.rect.x >= self.screen.get_width() - self.player.rect.width - 10:
                 self.dim.darken(0)
-                Wall.delete_all("room4")
+                Wall.delete_all("scene4")
                 self.scene_manager.set_scene("scene5")
 
 
@@ -320,7 +319,7 @@ class Scene4():
         self.border1.interaction(self.player, keys)
 
 
-        self.player.wall_collision(Wall.walls["room4"])
+        self.player.wall_collision(Wall.walls["scene4"])
         self.timer += 1
 
 class Scene5():
@@ -329,23 +328,23 @@ class Scene5():
         self.scene_manager = scene_manager
 
         self.bg = pygame.transform.scale(pygame.image.load('images/room/room5.png'), (1280, 720))
-        self.paper = Note(1, (750, 420, 64, 64), room="room5", item="papernote4")
-        self.passcode = Passcode(self.screen, (1000,350,100,40))
-        self.player = Player(self.screen, (50,600))
-        self.witch = Witch(self.screen)
+        self.paper = Note(1, (750, 420, 64, 64), scene="scene5", item="papernote4")
+        self.passcode = Passcode((1000,350,100,40))
+        self.player = Player((50,600))
+        self.witch = Witch()
 
-        self.paper = Note(1, (700, 600, 64, 64), room="room5", item="papernote4")
-        self.cabinet = Interactable(1, (240,280,380,80), room="room5", item="cabinet")
-        self.passcode = Passcode(self.screen, (800,260,100,40))
-        self.door = Door(self.screen, (800,80))
+        self.paper = Note(1, (700, 600, 64, 64), scene="scene5", item="papernote4")
+        self.cabinet = Interactable(1, (240,280,380,80), scene="scene5", item="cabinet")
+        #self.passcode = Passcode((800,260,100,40))
+        self.door = Door((800,80))
 
         self.lantern = Light(self.screen, (220,220,220), 25, (self.player.rect.x + 97, self.player.rect.y + 152))
         self.dim = Dim(self.screen)
 
-        self.wall1 = Wall((0,0), (1280,200), "room5")
-        self.wall2 = Wall((250,280),(370,70), "room5")
-        self.border1 = Interactable(1, (0,0,5,720), "allrooms", "border")
-        self.border2 = Interactable(1, (1270,0,5,720), "allrooms", "wall")
+        self.wall1 = Wall((0,0), (1280,200), "scene5")
+        self.wall2 = Wall((250,280),(370,70), "scene5")
+        self.border1 = Interactable(1, (0,0,5,720), "allscenes", "border")
+        self.border2 = Interactable(1, (1270,0,5,720), "allscenes", "wall")
 
         self.locked = True
 
@@ -384,7 +383,7 @@ class Scene5():
             if self.player.rect.colliderect(self.door.rect) and keys[pygame.K_z]:
                 self.door.open_door()
                 self.dim.darken(0)
-                Wall.delete_all("room5")
+                Wall.delete_all("scene5")
                 self.scene_manager.set_scene("scene6")
 
         if not self.sfx_channel.get_busy():
@@ -406,7 +405,7 @@ class Scene5():
         self.border1.interaction(self.player, keys)
         self.border2.interaction(self.player, keys)
 
-        self.player.wall_collision(Wall.walls["room5"])
+        self.player.wall_collision(Wall.walls["scene5"])
 
 
 class Scene6():
@@ -415,15 +414,15 @@ class Scene6():
         self.scene_manager = scene_manager
 
         self.bg = pygame.transform.scale(pygame.image.load('images/room/room6.png'), (1280, 720))
-        self.paper = Note(1, (700, 500, 64, 64), room="room6", item="papernote5")
-        self.player = Player(self.screen, (150,600))
-        self.witch = Witch(self.screen)
+        self.paper = Note(1, (700, 500, 64, 64), scene="scene6", item="papernote5")
+        self.player = Player((150,600))
+        self.witch = Witch()
 
         self.lantern = Light(self.screen, (220,220,220), 25, (self.player.rect.x + 97, self.player.rect.y + 152))
         self.dim = Dim(self.screen)
 
-        self.wall1 = Wall((0,0), (1280,200), "room6")
-        self.border = Interactable(1, (0,0,5,720), "allrooms", "border")
+        self.wall1 = Wall((0,0), (1280,200), "scene6")
+        self.border = Interactable(1, (0,0,5,720), "allscenes", "border")
         self.bgm_channel = pygame.mixer.Channel(0)
         self.sfx_channel = pygame.mixer.Channel(1)
 
@@ -443,7 +442,8 @@ class Scene6():
 
         if self.player.rect.x >= self.screen.get_width() - self.player.rect.width - 10:
             self.dim.darken(0)
-            Wall.delete_all("room6")
+            Wall.delete_all("scene6")
+            
             self.scene_manager.set_scene("scene7")
 
         keys = pygame.key.get_pressed()
@@ -459,7 +459,7 @@ class Scene6():
 
         self.paper.interaction(self.player, keys)
         self.border.interaction(self.player, keys)
-        self.player.wall_collision(Wall.walls["room6"])
+        self.player.wall_collision(Wall.walls["scene6"])
 
 class Scene7():
     def __init__(self, scene_manager):
@@ -467,16 +467,16 @@ class Scene7():
         self.scene_manager = scene_manager
 
         self.bg = pygame.transform.scale(pygame.image.load('images/room/room7.png'), (1280, 720))
-        self.paper = Note(1, (300, 600, 64, 64), room="room7", item="papernote6")
-        self.player = Player(self.screen, (50,600))
-        self.witch = Witch(self.screen)
+        self.paper = Note(1, (300, 600, 64, 64), scene="scene7", item="papernote6")
+        self.player = Player((50,600))
+        self.witch = Witch()
 
         self.lantern = Light(self.screen, (220,220,220), 25, (self.player.rect.x + 97, self.player.rect.y + 152))
         self.dim = Dim(self.screen)
 
-        self.wall1 = Wall((0,0), (1280,200), "room7")
-        self.wall2 = Wall((240,280),(700,80), "room7")
-        self.border = Interactable(1, (0,0,5,720), "allrooms", "border")
+        self.wall1 = Wall((0,0), (1280,200), "scene7")
+        self.wall2 = Wall((240,280),(700,80), "scene7")
+        self.border = Interactable(1, (0,0,5,720), "allscenes", "border")
         self.bgm_channel = pygame.mixer.Channel(0)
         self.sfx_channel = pygame.mixer.Channel(1)
 
@@ -497,7 +497,7 @@ class Scene7():
         keys = pygame.key.get_pressed()
         if self.player.rect.x >= self.screen.get_width() - self.player.rect.width - 10:
             self.witch.scare(self.player)
-            Wall.delete_all("room7")
+            Wall.delete_all("scene7")
             self.scene_manager.set_scene("limbo")
 
         self.paper.blit()
@@ -520,7 +520,7 @@ class Limbo():
         self.bg_rect = self.bg.get_rect(center = (640, 360))
 
 
-        self.player = Player(self.screen, (400,600))
+        self.player = Player((400,600))
         self.limbo_monologue = Interactable(1, (0,0,1280,720), "limbo", "limbo monologue")
 
     def run(self):
@@ -548,7 +548,7 @@ class University():
         self.screen = screen
         self.scene_manager = scene_manager
         self.friend = Friend(1)
-        self.player = Player(self.screen, (300,300))
+        self.player = Player((300,300))
         self.bg = pygame.transform.scale(pygame.image.load("images/room/classroom.png"), (1280, 720))
 
 
@@ -577,7 +577,7 @@ class Finale():
 
         self.bg = pygame.transform.scale(pygame.image.load("images/room/end.png"), (1280,720))
         self.channel = pygame.mixer.Channel(1)
-        self.player = Player(self.screen, (400,600))
+        self.player = Player((400,600))
         self.finale_monologue = Interactable(1, (0,0,1280,720), "finale", "finale monologue")
 
 

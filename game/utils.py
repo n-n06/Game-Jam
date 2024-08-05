@@ -1,5 +1,5 @@
 import pygame
-from typing import Tuple
+from typing import Tuple, Literal
 
 pygame.init()
 
@@ -88,3 +88,25 @@ class Slider():
 
         return (button_val/val_range)*(self.max - self.min) + self.min
 
+
+
+'''
+Typing utils
+'''
+
+
+
+scene_literal = Literal[
+        "intro",
+        "allscenes",
+        "scene1",
+        "scene2",
+        "scene3",
+        "scene4",
+        "scene5",
+        "scene6",
+        "scene7",
+        "limbo",
+        "university",
+        "finale"
+        ]
