@@ -2,6 +2,7 @@ import pygame
 
 from soundbar import sfx, music
 
+from config import screen
 from menu import Settings, Menu
 from scenes import Scene1, Scene2, Scene3, Scene4, Scene5, Scene6, Scene7, Intro, Limbo, University, Finale
 
@@ -14,29 +15,29 @@ class Game():
     '''
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((screen_width, screen_height))
+        self.screen = screen
         pygame.display.set_caption("GONE")
 
         self.clock = pygame.time.Clock()
 
         '''
-        Here we init every single Scene
+        Init every single Scene
         '''
 
         self.scene_manager = Scene_manager("menu")
-        self.menu = Menu(self.screen, self.scene_manager)
-        self.settings = Settings(self.screen, self.scene_manager)
-        self.intro = Intro(self.screen, self.scene_manager)
-        self.scene1 = Scene1(self.screen, self.scene_manager)
-        self.scene2 = Scene2(self.screen, self.scene_manager)
-        self.scene3 = Scene3(self.screen, self.scene_manager)
-        self.scene4 = Scene4(self.screen, self.scene_manager)
-        self.scene5 = Scene5(self.screen, self.scene_manager)
-        self.scene6 = Scene6(self.screen, self.scene_manager)
-        self.scene7 = Scene7(self.screen, self.scene_manager)
-        self.limbo = Limbo(self.screen, self.scene_manager)
-        self.university = University(self.screen, self.scene_manager)
-        self.finale = Finale(self.screen, self.scene_manager)
+        self.menu = Menu(self.scene_manager)
+        self.settings = Settings(self.scene_manager)
+        self.intro = Intro(self.scene_manager)
+        self.scene1 = Scene1(self.scene_manager)
+        self.scene2 = Scene2(self.scene_manager)
+        self.scene3 = Scene3(self.scene_manager)
+        self.scene4 = Scene4(self.scene_manager)
+        self.scene5 = Scene5(self.scene_manager)
+        self.scene6 = Scene6(self.scene_manager)
+        self.scene7 = Scene7(self.scene_manager)
+        self.limbo = Limbo(self.scene_manager)
+        self.university = University(self.scene_manager)
+        self.finale = Finale(self.scene_manager)
 
 
 
@@ -67,6 +68,7 @@ class Game():
         self.bgm_channel.play(music["menusong"], -1)
         self.ambient_channel.play(sfx["ambience"], -1)
         self.ambient_channel.set_volume(1.0)
+
         pygame.mixer.Channel(3).play(music["limbotheme"], -1)
         pygame.mixer.Channel(4).play(music["finalesong"], -1)
         pygame.mixer.Channel(3).pause()
@@ -79,7 +81,7 @@ class Game():
 
             '''
             The main element of the entire game.
-            Here we call the get_scene function of scene manager and according to the returned value, we play this scene
+            Call the get_scene function of scene manager and according to the returned value, play this scene
             '''
             scene = self.scene_manager.get_scene()
             if scene == "limbo":
@@ -114,3 +116,5 @@ class Scene_manager():
         if prev_scene:
             self.prev_scene = prev_scene
         self.current_scene = scene
+
+

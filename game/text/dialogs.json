@@ -21,7 +21,7 @@
             "And.................................."
         ]
     },
-    "allrooms":{
+    "allscenes":{
         "border" : [
             "No Way Back"
         ],
@@ -32,7 +32,7 @@
             "It is just a wall"
         ]
     },
-    "room1":{
+    "scene1":{
         "notebook" : [
             "An old notebook on a table",
             "It has some calc notes...",
@@ -46,14 +46,14 @@
             "'So, this building was always a place for constructions and repairs'"
         ]
     },
-    "room2":{
+    "scene2":{
         "papernote1" : [
             "Note1",
             "Had to take out some pages out of my calc2 notebook to write notes",
             "Maybe I should leave them as I walk through this basement..."
         ]
     },
-    "room3":{
+    "scene3":{
         "papernote2" : [
             "Note2",
             "I think I am starting to hear things...",
@@ -67,12 +67,12 @@
             "You found a key behind the painting of Qonaev (or Kunaev)"
         ]
     },
-    "room4":{
+    "scene4":{
         "papernote3" : [
             "HIDE!"
         ]
     },
-    "room5":{
+    "scene5":{
         "papernote4" : [
             "Note4",
             "I can't. I CAN'T. This is too much for my mental health.",
@@ -103,7 +103,7 @@
         ],
         "password" : "1565"
     },
-    "room6":{
+    "scene6":{
         "papernote5" : [
             "Note5",
             "If I made it out of here....",
@@ -114,7 +114,7 @@
             "I have to get out of here"
         ]
     },
-    "room7":{
+    "scene7":{
         "papernote6" : [
             "Note???",
             "I think this is it - The exit!"

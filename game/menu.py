@@ -1,8 +1,10 @@
 import pygame
 from utils import Button, Slider
 
+from config import screen
+
 class Menu():
-    def __init__(self, screen, scene_manager):
+    def __init__(self, scene_manager):
         self.screen = screen
         self.scene_manager = scene_manager
 
@@ -46,7 +48,7 @@ class Menu():
 
 
 class Settings():
-    def __init__(self, screen, scene_manager):
+    def __init__(self, scene_manager):
         self.screen = screen
         self.scene_manager = scene_manager
 
