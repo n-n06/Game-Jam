@@ -1,7 +1,7 @@
 # GONE game project
 
 ## Further development
-As of 5th of August 2024 I, n-n06, have started complete refactor of the code of the game to make it more suitable for modern Python project standards. I hope that I will finish polishing this project very soon so that people could enjoy optimized playing experience.
+As of 5th of August 2024 I, n-n06, have started complete refactor of the code of the game to make it more suitable for modern Python project standards. I hope that I will finish polishing this project very soon so that people could enjoy optimized playing experience :).
 
 
 ### Installation
